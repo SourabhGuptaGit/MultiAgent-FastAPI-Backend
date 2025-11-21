@@ -1,11 +1,21 @@
 services:
-  app:
+  backend:
     # image: python:latest
     build:
-      context: ./static_files
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8000
+    command: python -m http.server 8000
+    volumes:
+      - ./backend/src:/app
+  
+  static_html:
+    build:
+      context: ./static_html
       dockerfile: static.Dockerfile
     ports:
       - 3000:8000
     command: python -m http.server 8000
     volumes:
-      - ./static_files/src:/app
+      - ./static_html/src:/app
