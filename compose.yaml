@@ -1,0 +1,11 @@
+services:
+  app:
+    # image: python:latest
+    build:
+      context: ./static_files
+      dockerfile: static.Dockerfile
+    ports:
+      - 3000:8000
+    command: python -m http.server 8000
+    volumes:
+      - ./static_files/src:/app
