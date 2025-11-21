@@ -1,6 +1,13 @@
 FROM python:latest
 
+RUN python -m venv /opt/venv
+ENV PATH=/opt/venv:$PATH
+
 WORKDIR /app
+
+COPY requirements.txt /tmp/requirements.txt
+
+RUN pip install -r /tmp/requirements.txt
 
 COPY ./src .
 
