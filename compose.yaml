@@ -7,13 +7,15 @@ services:
     ports:
       - 8080:8000
     command: uvicorn main:app --host 0.0.0.0 --port 8000
-    environment:
-      - PORT=8000
-      - NOTE="This is just string."
+    # environment:
+    #   - PORT=8000
+    #   - NOTE="This is just string."
     env_file:
       - .env.backend
     volumes:
       - ./backend/src:/app
+    depends_on:
+      - db_service
     develop:
       watch:
         - action: rebuild
@@ -26,12 +28,28 @@ services:
         #   path: ./backend/src
         #   target: /app
   
-  static_html:
-    build:
-      context: ./static_html
-      dockerfile: static.Dockerfile
+  db_service:
+    image: postgres:15
     ports:
-      - 3000:8000
-    command: python -m http.server 8000
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=db_user
+      - POSTGRES_PASSWORD=db_pass
+      - POSTGRES_DB=mydb
+    # env_file:
+    #   - .env.backend.db
     volumes:
-      - ./static_html/src:/app
+      - dc_managed_db_volume:/var/lib/postgresql/data
+
+  # static_html:
+  #   build:
+  #     context: ./static_html
+  #     dockerfile: static.Dockerfile
+  #   ports:
+  #     - 3000:8000
+  #   command: python -m http.server 8000
+  #   volumes:
+  #     - ./static_html/src:/app
+
+volumes:
+  dc_managed_db_volume:
