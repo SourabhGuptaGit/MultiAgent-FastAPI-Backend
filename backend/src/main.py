@@ -16,13 +16,11 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.include_router(chat_router, prefix="/api/chats")
 
-env_variables = ["PORT","PORT","NOTE", "POSTGRES_USER","POSTGRES_PASS","POSTGRES_DB"]
 
 @app.get("/")
 def home():
     return {
-        "message": "Welcome to your first FastAPI.",
-        # "environment": {key: os.getenv(key) for key in env_variables}
+        "message": "Welcome to your first FastAPI."
     }
 
 
