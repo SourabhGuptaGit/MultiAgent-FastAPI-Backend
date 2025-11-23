@@ -19,4 +19,4 @@ if IS_PROD == "True":
     
 
 def get_ollama_llm():
-    return ChatOllama(**chat_model_obj)
+    return ChatOllama(**chat_model_obj) if IS_PROD == "True" ChatOpenAI(**chat_model_obj)
