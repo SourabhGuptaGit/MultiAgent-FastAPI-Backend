@@ -1,0 +1,114 @@
+# ============================
+# PYTHON
+# ============================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+
+# Python cache
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ============================
+# ENVIRONMENT FILES
+# ============================
+*.env
+.env.*
+!example.env
+
+# Config overrides
+*.local
+*.ini
+*.cfg
+
+# ============================
+# LANGCHAIN / LANGGRAPH
+# ============================
+# LangChain cache directories
+.lc_cache/
+langchain.db
+lcstore/
+vectorstore/
+chromadb/
+faiss_index/
+index_store/
+
+# LangGraph execution artifacts
+.graph/
+*.graph.json
+
+# ============================
+# FASTAPI / UVICORN
+# ============================
+# Uvicorn logs
+*.log
+logs/
+log/
+*.pid
+
+# ============================
+# DOCKER
+# ============================
+# Docker build artifacts
+docker-data/
+docker-volumes/
+docker-cache/
+.dockerignore
+
+# Avoid committing local Docker env settings
+docker-compose.override.yml
+
+# ============================
+# DATABASES
+# ============================
+*.sqlite
+*.db
+*.db-journal
+data/
+postgres-data/
+
+# ============================
+# EDITOR / IDE
+# ============================
+.vscode/
+.vscode/*
+.idea/
+*.iml
+
+# MacOS
+.DS_Store
+*.DS_Store
+
+# Windows
+Thumbs.db
+
+# ============================
+# TESTING
+# ============================
+.coverage
+pytest_cache/
+.cache/
+htmlcov/
+.tox/
+.nox/
+
+# ============================
+# MISC
+# ============================
+*.swp
+*.swo
+tmp/
+temp/
