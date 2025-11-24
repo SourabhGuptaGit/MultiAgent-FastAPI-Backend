@@ -20,14 +20,13 @@ def research_email(query: str):
 
 
 @tool
-def send_email_tool(subject: str, content: str, recipient: str = None, sender: str = None) -> str:
-    """Send an Emmail to a receipent.
+def send_email_tool(subject: str, content: str, recipient: str = None) -> str:
+    """Send an Email to a receipent email address.
 
     Args:
         subject (str): Email Subject.
         content (str): Email content.
-        recipient (str, optional): Email of recipient, default none means send to myself, Default is None.
-        sender (str, optional): Email of sender, default none means send by myself, Default is None.
+        recipient (str, optional): Email of recipient, Default is None that will send to myself.
         
     Returns:
     returns string message of successfully sending mail or failure while sending mail due to error.

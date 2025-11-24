@@ -6,15 +6,15 @@ from api.ai.tools import send_email_tool, get_unread_mails_tool, research_email
 
 agentic_tools = [send_email_tool, get_unread_mails_tool]
 
-def exec_email_agent(_exec: bool = False, query: str = ""):
+def exec_email_agent(query: str = ""):
     model = get_ollama_llm()
     agent = create_react_agent(
         model=model,
         tools=agentic_tools,
-        prompt="You are a helpful assistant for research and composing plaintext emails. Do not use markdown in your response only plaintext.",
+        prompt="You are a helpful assistant for managing my email inbox for generating, sending, and reviewing emails.",
         name="email_agent"
     )
-    if _exec:
+    if query:
         response = agent.invoke({
             "message": [{
                 "role": "user", "content": query
@@ -23,7 +23,7 @@ def exec_email_agent(_exec: bool = False, query: str = ""):
         return response
     return agent
 
-def exec_research_agent(_exec: bool = False, query: str = ""):
+def exec_research_agent(query: str = ""):
     model = get_ollama_llm()
     agent = create_react_agent(
         model=model,
@@ -31,7 +31,7 @@ def exec_research_agent(_exec: bool = False, query: str = ""):
         prompt="You are a helpful research assistant for preparing emails data.",
         name="research_agent"
     )
-    if _exec:
+    if query:
         response = agent.invoke({
             "message": [{
                 "role": "user", "content": query
@@ -40,21 +40,25 @@ def exec_research_agent(_exec: bool = False, query: str = ""):
         return response
     return agent
 
-def exec_supervisor(_exec: bool = False, query: str = ""):
+def exec_supervisor(query: str = ""):
     llm = get_ollama_llm()
-    email_agent = exec_email_agent()
-    research_agent = exec_research_agent()
+    if query:
+        email_agent = exec_email_agent(query)
+        research_agent = exec_research_agent(query)
+    else:
+        email_agent = exec_email_agent()
+        research_agent = exec_research_agent()
     
     super_v = create_supervisor(
         agents=[email_agent, research_agent],
         model=llm,
         prompt=(
-            "You manage a  research assistant and a"
-            "email inbox manager assistant, assign work to them."
+            "You manage a  research assistant and a \
+            email inbox manager assistant, assign work to them."
         )
     ).compile()
     
-    if _exec:
+    if query:
         response = super_v.invoke({
             "message": [{
                 "role": "user", "content": query
@@ -62,8 +66,3 @@ def exec_supervisor(_exec: bool = False, query: str = ""):
         })
         return response
     return super_v
-
-# from api.ai.agents import exec_supervisor, exec_email_agent, exec_research_agent
-# research_agent = exec_research_agent()
-# email_agent = exec_email_agent()
-# super_agent = exec_supervisor()
